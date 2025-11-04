@@ -1,19 +1,15 @@
 package library.model;
-//Comet 1
-
-
 
 public class Book implements Lendable {
-    private String title;
-    private String author;
+    private BookInfo bookInfo;
     private boolean borrowed;
 
     public Book(String title, String author) {
-        this.title = title;
-        this.author = author;
+        this.bookInfo = new BookInfo(title, author);
         this.borrowed = false;
     }
 
+    // Garder l'interface originale
     @Override
     public void borrow() {
         if (!borrowed) {
@@ -32,11 +28,11 @@ public class Book implements Lendable {
         }
     }
 
-    public String getTitle() { return title; }
-    public String getAuthor() { return author; }
+    public String getTitle() { return bookInfo.getTitle(); }
+    public String getAuthor() { return bookInfo.getAuthor(); }
     public boolean isBorrowed() { return borrowed; }
 
-    // Méthode volontairement complexe pour TP SonarQube
+    // Méthode complexe SI nécessaire
     public void complexMethodExample(int n) {
         for (int i = 0; i < n; i++) {
             if (i % 2 == 0) {

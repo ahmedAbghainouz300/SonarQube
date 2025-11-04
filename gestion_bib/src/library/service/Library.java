@@ -2,7 +2,9 @@ package library.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import library.model.*;
+import library.model.Lendable;
+import library.model.Book;
+import library.model.DigitalBook;
 
 public class Library {
     private List<Lendable> items;
@@ -19,20 +21,29 @@ public class Library {
         items.remove(item);
     }
 
-    // Méthode volontairement incorrecte pour TP SonarQube
     public List<Lendable> getAvailableItems() {
-        List<Lendable> availableItems = new ArrayList<>();
+        List<Lendable> available = new ArrayList<>();
         for (Lendable item : items) {
-            availableItems.add(item); // ne tient pas compte de l'état borrowed
+            if (!item.isBorrowed()) {
+                available.add(item);
+            }
         }
-        return availableItems;
+        return available;
     }
 
+    public List<Lendable> getAllItems() {
+        return new ArrayList<>(items);
+    }
+
+    // CORRECTION : Cette méthode doit AFFICHER les items
     public void listAllItems() {
         for (Lendable item : items) {
             if (item instanceof Book) {
-                Book b = (Book) item;
-                System.out.println(b.getTitle() + " by " + b.getAuthor());
+                Book book = (Book) item;
+                System.out.println(book.getTitle() + " by " + book.getAuthor());
+            } else if (item instanceof DigitalBook) {
+                DigitalBook digital = (DigitalBook) item;
+                System.out.println(digital.getTitle() + " [Digital] - " + digital.getFileSizeMB() + "MB");
             } else {
                 System.out.println("Unknown item type");
             }
